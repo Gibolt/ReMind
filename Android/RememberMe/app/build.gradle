@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.techhack.remind"
+        applicationId "com.techhack.rememberme"
         minSdkVersion 17
         targetSdkVersion 22
         versionCode 1
@@ -22,4 +22,11 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.google.android.gms:play-services:7.3.0'
+    compile "com.android.support:support-v4:+"
+    compile 'com.squareup.picasso:picasso:2.3.+'
+    compile 'com.marvinlabs:android-slideshow-widget:0.5.+@aar'
+    compile 'com.marvinlabs:android-slideshow-widget-picasso-plugin:0.5.+@aar'
+    compile 'com.squareup.okhttp:okhttp:2.0.+'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.+'
 }

@@ -1,4 +1,4 @@
-package com.techhack.remind;
+package com.techhack.rememberme;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
