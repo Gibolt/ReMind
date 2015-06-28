@@ -8,5 +8,40 @@
 			<input type="file" name="userPhoto" />
 			<input type="submit" value="Upload Image" name="submit">
 		</form>
+		
+		<script>
+			function showImages(res) {
+				var list = JSON.parse(res);
+				for (var i=0; i<list.length; i++) {
+					list[i] = "http://acm.party:3000/api/a/" + list[i];
+				}
+				var img = document.createElement("img");
+				img.setAttribute('src', list[0]);
+				img.style.width  = "100px";
+				img.style.height = "100px";
+				document.appendChild(img);
+			};
+			
+			function callUrl(url, async, fn) {
+				if (async != false) {
+					async = true;
+				}
+				var req = new XMLHttpRequest();
+				req.open("GET", url, async);
+				if (arguments.length == 3) {
+					req.onreadystatechange = function () {
+						if (req.readyState == 4) {
+							fn(req.responseText);
+						}
+					}
+				}
+				try {
+					req.send();
+				}
+				catch(e) {}
+			}
+			var url = "http://acm.party:3000/api/photos/a";
+			callUrl(url, true, showImages);
+		</script>
 	</body>
 </html>
