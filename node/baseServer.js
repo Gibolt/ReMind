@@ -2,8 +2,8 @@ var express = require("express");
 var multer  = require('multer');
 var fs      = require('fs');
 var app     = express();
-app.use('api', express.static('/root/www'));
-app.use(express.static('/root/www/users'));
+app.use(express.static('/root/www'));
+// app.use(express.static('/root/www/users'));
 var done = false;
 var port = 3000;
 
