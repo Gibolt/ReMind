@@ -166,25 +166,26 @@ class ItemGridCollectionViewController: UICollectionViewController {
 //            }
 //        }
         
-        var request:NSURLRequest = createRequest(userid: "a", img: image)
-        
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: {
-            data, response, error in
-            if error != nil {
-                println(error)
-//                errord(error)
-                return
-            }
-            var parseError: NSError?
-            let responseObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &parseError)
-            if let responseDictionary = responseObject as? NSDictionary {
-//                success(responseDictionary)
-                NSLog("Successfully sent an Image")
-            } else {
-            }
-            
-        })
-        task.resume()
+//        var request:NSURLRequest = createRequest(userid: "nakul", img: image)
+//        
+//        let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: {
+//            data, response, error in
+//            if error != nil {
+//                println(error)
+////                errord(error)
+//                return
+//            }
+//            var parseError: NSError?
+//            let responseObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &parseError)
+//            if let responseDictionary = responseObject as? NSDictionary {
+////                success(responseDictionary)
+//                NSLog("Successfully sent an Image")
+//            } else {
+//                NSLog("Failed to sent an Image")
+//            }
+//            
+//        })
+//        task.resume()
         
 
     }
@@ -204,13 +205,19 @@ class ItemGridCollectionViewController: UICollectionViewController {
         
         let boundary = generateBoundaryString()
         
-        let url = NSURL(string: "acm.party:3000/api/photo/")
+        let url = NSURL(string: "http://acm.party:3000/api/photo/")
         let request = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = "POST"
+        request.HTTPMethod = "SEND"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
         
-        request.HTTPBody = createBodyWithParameters(param, filePathKey: "file", paths: nil, image: img, boundary: boundary)
+//        request.HTTPBody = createBodyWithParameters(param, filePathKey: "file", paths: nil, image: img, boundary: boundary)
+        
+        var data:NSData? = UIImageJPEGRepresentation(img, 100)
+        if data == nil {
+            NSLog("Something's rong")
+        }
+        request.HTTPBody = photoDataToFormData(data!, boundary: boundary, fileName: "file")
         
         return request
     }
@@ -230,7 +237,7 @@ class ItemGridCollectionViewController: UICollectionViewController {
         
         //convert UIImage to NSData
         if image != nil {
-            data = UIImagePNGRepresentation(image)
+            data = UIImageJPEGRepresentation(image, 100)
         }
         
         // Append the body with params
