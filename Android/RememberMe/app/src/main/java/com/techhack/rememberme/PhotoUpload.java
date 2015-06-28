@@ -1,6 +1,8 @@
 package com.techhack.rememberme;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -45,6 +47,17 @@ public class PhotoUpload extends Activity {
                 startActivity(i);
             }
         });
+
+        this.startAlarm();
+
+    }
+
+    private void startAlarm() {
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
+        long when = System.currentTimeMillis();         // notification time
+        Intent intent = new Intent(this, ReminderService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
+        alarmManager.setRepeating(AlarmManager.RTC, when, (AlarmManager.INTERVAL_FIFTEEN_MINUTES / 30), pendingIntent);
     }
 
     @Override
